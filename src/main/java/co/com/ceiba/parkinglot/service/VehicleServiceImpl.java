@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.com.ceiba.parkinglot.dao.VehicleRepository;
-import co.com.ceiba.parkinglot.model.Vehicle;
+import co.com.ceiba.parkinglot.model.VehicleEntity;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
@@ -14,7 +14,7 @@ public class VehicleServiceImpl implements VehicleService {
 	protected VehicleRepository vehicleRepository;
 
 	@Override
-	public Vehicle save(Vehicle vehicle) {
+	public VehicleEntity save(VehicleEntity vehicle) {
 		return this.vehicleRepository.save(vehicle);
 	}
 

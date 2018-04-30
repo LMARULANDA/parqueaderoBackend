@@ -1,6 +1,6 @@
 package co.com.ceiba.parkinglot.service;
 
-import co.com.ceiba.parkinglot.model.Vehicle;
+import co.com.ceiba.parkinglot.model.VehicleEntity;
 
 public interface VehicleService {
 	
@@ -11,6 +11,6 @@ public interface VehicleService {
 	 * @param vehicle
 	 * @return vehiculo guardado
 	 */
-	Vehicle save(Vehicle vehicle);
+	VehicleEntity save(VehicleEntity vehicle);
 
 }

@@ -9,13 +9,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name="vehicle")
 @Access(AccessType.FIELD)
-public class Vehicle extends ParentEntity {
+public class VehicleEntity extends ParentEntity {
 
 	private static final long serialVersionUID = 5007294535142484696L;
 	
 	
 	@Column(name="license_plate", nullable = false, length = 255)
 	 private String licensePlate;
+	
+	@Column(name="type_vehicle", nullable = false, length = 255)
+	private String typeOfVehicle;
 	
 	@Column(name="displacement", nullable = true, length = 255)
 	 private String displacement;
@@ -34,6 +37,14 @@ public class Vehicle extends ParentEntity {
 
 	public void setDisplacement(String displacement) {
 		this.displacement = displacement;
+	}
+
+	public String getTypeOfVehicle() {
+		return typeOfVehicle;
+	}
+
+	public void setTypeOfVehicle(String typeOfVehicle) {
+		this.typeOfVehicle = typeOfVehicle;
 	}
 	
 	
