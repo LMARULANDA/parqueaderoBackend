@@ -1,7 +1,8 @@
 package co.com.ceiba.parqueadero.model;
 
+
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -9,10 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 
 @Entity
 @Table(name="registro")
@@ -26,13 +25,13 @@ public class Registro extends ParentEntity {
 	private Vehiculo vehiculo;
 	
 	@Column(name="hora_entrada", nullable = false )
-	private Date horaEntrada;
+	private LocalDateTime horaEntrada;
 	
 	@Column(name="hora_salida", nullable = true)
-	private Date horaSalida;
+	private LocalDateTime horaSalida;
 	
-	@Column(name="precio", nullable = true)
-	private Float precio;
+	@Column(name="pago", nullable = true)
+	private Float pago;
 
 	
 	public Vehiculo getVehiculo() {
@@ -43,28 +42,28 @@ public class Registro extends ParentEntity {
 		this.vehiculo = vehiculo;
 	}
 
-	public Date getHoraEntrada() {
+	public LocalDateTime getHoraEntrada() {
 		return horaEntrada;
 	}
 
-	public void setHoraEntrada(Date horaEntrada) {
+	public void setHoraEntrada(LocalDateTime horaEntrada) {
 		this.horaEntrada = horaEntrada;
 	}
 
-	public Date getHoraSalida() {
+	public LocalDateTime getHoraSalida() {
 		return horaSalida;
 	}
 
-	public void setHoraSalida(Date horaSalida) {
+	public void setHoraSalida(LocalDateTime horaSalida) {
 		this.horaSalida = horaSalida;
 	}
 
-	public Float getPrecio() {
-		return precio;
+	public Float getPago() {
+		return pago;
 	}
 
-	public void setPrecio(Float precio) {
-		this.precio = precio;
+	public void setPago(Float precio) {
+		this.pago = precio;
 	}
 	
 	

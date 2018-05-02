@@ -7,7 +7,4 @@ import co.com.ceiba.parqueadero.model.Registro;
 
 public interface RegistroRepository extends JpaRepository<Registro, Long> {
 	
-	@SuppressWarnings("unchecked")
-	Registro save(Registro registro);
-
 }
