@@ -21,12 +21,12 @@ public class Vehiculo extends ParentEntity {
 	private String tipoDeVehiculo;
 	
 	@Column(name="cilindraje", nullable = true, length = 50)
-	 private String cilindraje;
+	 private int cilindraje;
 	
 	public Vehiculo() {
 		
 	}
-	public Vehiculo(String placa, String tipoDeVehiculo, String cilindraje) {
+	public Vehiculo(String placa, String tipoDeVehiculo, int cilindraje) {
 		super();
 		this.placa = placa;
 		this.tipoDeVehiculo = tipoDeVehiculo;
@@ -50,11 +50,11 @@ public class Vehiculo extends ParentEntity {
 		this.tipoDeVehiculo = tipoDeVehiculo;
 	}
 
-	public String getCilindraje() {
+	public int getCilindraje() {
 		return cilindraje;
 	}
 
-	public void setCilindraje(String cilindraje) {
+	public void setCilindraje(int cilindraje) {
 		this.cilindraje = cilindraje;
 	}
 

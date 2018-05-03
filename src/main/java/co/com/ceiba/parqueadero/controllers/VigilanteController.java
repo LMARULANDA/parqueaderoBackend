@@ -30,23 +30,23 @@ public class VigilanteController {
 	// este no debe de ir como servicio Rest.sino dentro de save.
 	// save se puede cambiar por otro nombre
 	@RequestMapping(value = "/agregarVehiculo", method = RequestMethod.POST)
-	public RestResponse agregarVehiculo(@RequestBody String vehiculoJson)
+	public Vehiculo agregarVehiculo(@RequestBody String vehiculoJson)
 			throws JsonParseException, JsonMappingException, IOException {
 		this.mapper = new ObjectMapper();
 		Vehiculo vehiculo = this.mapper.readValue(vehiculoJson, Vehiculo.class);
 
 		this.vigilanteService.save(vehiculo);
-		return new RestResponse(HttpStatus.OK.value(), "Operacion exitosa");
+		return this.vigilanteService.save(vehiculo);
 	}
 
 	@RequestMapping(value = "/registrarIngreso", method = RequestMethod.POST)
-	public RestResponse registrarIngreso(@RequestBody String vehiculoJson)
+	public Registro registrarIngreso(@RequestBody String vehiculoJson)
 			throws JsonParseException, JsonMappingException, IOException {
 		this.mapper = new ObjectMapper();
 		Vehiculo vehiculo = this.mapper.readValue(vehiculoJson, Vehiculo.class);
 
 		this.vigilanteService.registrarIngreso(vehiculo);
-		return new RestResponse(HttpStatus.OK.value(), "Operacion exitosa");
+		return this.vigilanteService.registrarIngreso(vehiculo);
 
 	}
 

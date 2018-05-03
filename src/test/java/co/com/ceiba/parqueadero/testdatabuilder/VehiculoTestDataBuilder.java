@@ -7,11 +7,11 @@ public class VehiculoTestDataBuilder {
 	
 	private static final String PLACA = "FHJ315";
 	private static final String TIPO_VEHICULO ="Carro";
-	private static final String CILINDRAJE = "";
+	private static final int CILINDRAJE = 0;
 	
 	private String placa;
 	private String tipoVehiculo;
-	private String Cilindraje;
+	private int Cilindraje;
 	
 	public VehiculoTestDataBuilder() {
 		this.placa = PLACA;
@@ -29,7 +29,7 @@ public class VehiculoTestDataBuilder {
 		return this;
 	}
 	
-	public VehiculoTestDataBuilder withCilindraje(String cilindraje) {
+	public VehiculoTestDataBuilder withCilindraje(int cilindraje) {
 		this.Cilindraje = cilindraje;
 		return this;
 	}

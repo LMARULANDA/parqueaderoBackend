@@ -17,6 +17,4 @@ public interface VigilanteService {
 
 	List<Registro> consultarVehiculos();
 	
-	
-
 }

@@ -1,7 +1,5 @@
 package co.com.ceiba.parqueadero.model;
 
-
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -28,7 +26,7 @@ public class Registro extends ParentEntity {
 	private Date horaEntrada;
 	
 	@Column(name="hora_salida", nullable = true)
-	private LocalDateTime horaSalida;
+	private Date horaSalida;
 	
 	@Column(name="pago", nullable = true)
 	private Float pago;
@@ -50,11 +48,11 @@ public class Registro extends ParentEntity {
 		this.horaEntrada = horaEntrada;
 	}
 
-	public LocalDateTime getHoraSalida() {
+	public Date getHoraSalida() {
 		return horaSalida;
 	}
 
-	public void setHoraSalida(LocalDateTime horaSalida) {
+	public void setHoraSalida(Date horaSalida) {
 		this.horaSalida = horaSalida;
 	}
 

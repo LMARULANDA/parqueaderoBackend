@@ -10,7 +10,7 @@ public class VehiculoTest {
 	
 	private static final String PLACA = "FHJ315";
 	private static final String TIPO_VEHICULO = "Carro";
-	private static final String CILINDRAJE ="";
+	private static final int CILINDRAJE =0;
 	
 	@Test
 	public void crearVehiculoTest() {
