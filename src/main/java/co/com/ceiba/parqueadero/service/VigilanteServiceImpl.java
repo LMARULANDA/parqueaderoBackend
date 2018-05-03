@@ -49,6 +49,7 @@ public class VigilanteServiceImpl implements VigilanteService {
 	protected RegistroRepository registroRepository;
 	
 	ConvertirDate date = new ConvertirDate();
+	ParqueaderoDTO parqueadero = new ParqueaderoDTO();
 	
 	
 	public VigilanteServiceImpl(VehiculoRepository vehiculoRepository, RegistroRepository registroRepository) {
@@ -238,12 +239,11 @@ public class VigilanteServiceImpl implements VigilanteService {
 	}
 	
 	public void actualizarDisponibilidadIngreso(String tipoVehiculo) {
-		ParqueaderoDTO parqueadero = new ParqueaderoDTO();
-		
 		if(tipoVehiculo == CARRO) {
 			int cantidadDisponible = parqueadero.getCantidadDisponibleCarros();
+			System.out.println("ingresoCarro" + parqueadero.getCantidadDisponibleCarros());
 			parqueadero.setCantidadDisponibleCarros(cantidadDisponible -1);
-			System.out.println("ingreso" + parqueadero.getCantidadDisponibleCarros());
+			System.out.println("ingresoCarroDespues de ingresar" + parqueadero.getCantidadDisponibleCarros());
 		}else {
 			int cantidadDisponible = parqueadero.getCantidadDisponibleMotos();
 			parqueadero.setCantidadDisponibleMotos(cantidadDisponible -1);
@@ -252,18 +252,17 @@ public class VigilanteServiceImpl implements VigilanteService {
 	}
 		
 		public void actualizarDisponibilidadRetiro(String tipoVehiculo) {
-			ParqueaderoDTO parqueadero = new ParqueaderoDTO();
 			
 			if(tipoVehiculo == CARRO) {
 				int cantidadDisponible = parqueadero.getCantidadDisponibleCarros();
-				System.out.println("retiro" +parqueadero.getCantidadDisponibleCarros());
+				System.out.println("retiroAntes" +parqueadero.getCantidadDisponibleCarros());
 				parqueadero.setCantidadDisponibleCarros(cantidadDisponible + 1);
-				System.out.println("retiro" +parqueadero.getCantidadDisponibleCarros());
+				System.out.println("retiroDwspues" +parqueadero.getCantidadDisponibleCarros());
 				
-			}else {
+			} else {
 				int cantidadDisponible = parqueadero.getCantidadDisponibleMotos();
 				parqueadero.setCantidadDisponibleMotos(cantidadDisponible + 1);
-				System.out.println("retiro" +parqueadero.getCantidadDisponibleMotos());
+				//System.out.println("retiro" +parqueadero.getCantidadDisponibleMotos());
 			}
 		
 	}

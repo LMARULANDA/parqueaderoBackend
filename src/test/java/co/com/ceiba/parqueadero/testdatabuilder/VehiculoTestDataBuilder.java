@@ -11,12 +11,12 @@ public class VehiculoTestDataBuilder {
 	
 	private String placa;
 	private String tipoVehiculo;
-	private int Cilindraje;
+	private int cilindraje;
 	
 	public VehiculoTestDataBuilder() {
 		this.placa = PLACA;
 		this.tipoVehiculo = TIPO_VEHICULO;
-		Cilindraje = CILINDRAJE;
+		this.cilindraje = CILINDRAJE;
 	}
 	
 	public VehiculoTestDataBuilder withPlaca(String placa) {
@@ -30,11 +30,11 @@ public class VehiculoTestDataBuilder {
 	}
 	
 	public VehiculoTestDataBuilder withCilindraje(int cilindraje) {
-		this.Cilindraje = cilindraje;
+		this.cilindraje = cilindraje;
 		return this;
 	}
 	public Vehiculo build() {
-		return new Vehiculo(this.placa,this.tipoVehiculo,this.Cilindraje);
+		return new Vehiculo(this.placa,this.tipoVehiculo,this.cilindraje);
 	}
 
 }
