@@ -1,6 +1,7 @@
 package co.com.ceiba.parqueadero.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,45 +21,47 @@ import co.com.ceiba.parqueadero.util.RestResponse;
 
 @RestController
 public class VigilanteController {
-	
+
 	@Autowired
 	protected VigilanteService vigilanteService;
-	
+
 	protected ObjectMapper mapper;
-	
-	//este no debe de ir como servicio Rest.sino dentro de save.
-	//save se puede cambiar por otro nombre
-	@RequestMapping(value="/agregarVehiculo", method = RequestMethod.POST)
-	public RestResponse agregarVehiculo(@RequestBody String vehiculoJson) throws JsonParseException, JsonMappingException, IOException {
+
+	// este no debe de ir como servicio Rest.sino dentro de save.
+	// save se puede cambiar por otro nombre
+	@RequestMapping(value = "/agregarVehiculo", method = RequestMethod.POST)
+	public RestResponse agregarVehiculo(@RequestBody String vehiculoJson)
+			throws JsonParseException, JsonMappingException, IOException {
 		this.mapper = new ObjectMapper();
 		Vehiculo vehiculo = this.mapper.readValue(vehiculoJson, Vehiculo.class);
-	
+
 		this.vigilanteService.save(vehiculo);
-		return new RestResponse(HttpStatus.OK.value(),"Operacion exitosa");
+		return new RestResponse(HttpStatus.OK.value(), "Operacion exitosa");
 	}
-	
-	@RequestMapping(value="/registrarIngreso", method = RequestMethod.POST)
-	public RestResponse registrarIngreso(@RequestBody String vehiculoJson) throws JsonParseException, JsonMappingException, IOException {
+
+	@RequestMapping(value = "/registrarIngreso", method = RequestMethod.POST)
+	public RestResponse registrarIngreso(@RequestBody String vehiculoJson)
+			throws JsonParseException, JsonMappingException, IOException {
 		this.mapper = new ObjectMapper();
 		Vehiculo vehiculo = this.mapper.readValue(vehiculoJson, Vehiculo.class);
-		
+
 		this.vigilanteService.registrarIngreso(vehiculo);
 		return new RestResponse(HttpStatus.OK.value(), "Operacion exitosa");
-		
+
 	}
-	
-	@RequestMapping(value="/registrarSalida", method = RequestMethod.POST)
-	public Registro registrarSalida(@RequestBody String vehiculoJson) throws JsonParseException, JsonMappingException, IOException {
+
+	@RequestMapping(value = "/registrarSalida", method = RequestMethod.POST)
+	public Registro registrarSalida(@RequestBody String vehiculoJson)
+			throws JsonParseException, JsonMappingException, IOException {
 		this.mapper = new ObjectMapper();
 		Vehiculo vehiculo = this.mapper.readValue(vehiculoJson, Vehiculo.class);
-		
+
 		return this.vigilanteService.registrarSalida(vehiculo);
-		
-
 	}
-
 	
-	
-	
-
+	@RequestMapping(value = "/consultarVehiculos", method = RequestMethod.GET)
+	public List<Registro> consultarVehiculos(){
+		return this.vigilanteService.consultarVehiculos();
+		
+	}
 }
