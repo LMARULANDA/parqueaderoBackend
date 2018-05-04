@@ -4,7 +4,6 @@ package co.com.ceiba.parqueadero.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 
 import java.text.DateFormat;
@@ -16,13 +15,10 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import co.com.ceiba.parqueadero.dao.RegistroRepository;
 import co.com.ceiba.parqueadero.dao.VehiculoRepository;
 import co.com.ceiba.parqueadero.model.Vehiculo;
-import co.com.ceiba.parqueadero.model.dto.ParqueaderoDTO;
 import co.com.ceiba.parqueadero.testdatabuilder.VehiculoTestDataBuilder;
-import junit.framework.Assert;
 
 public class VigilanteServiceImplTest {
 	
@@ -80,10 +76,10 @@ public class VigilanteServiceImplTest {
 		String fechaE = "03/05/2018 09:00:00";
 		Date fechaEntrada = dateformat.parse(fechaE);
 		
-		String fechaS = "03/05/2018 23:00:10";
+		String fechaS = "04/05/2018 12:00:00";
 		Date fechaSalida = dateformat.parse(fechaS);
 	
-		float pagoEsperado = (float) 8000.0;
+		float pagoEsperado = (float) 11000.0;
 		
 		//Act
 		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
@@ -120,6 +116,8 @@ public class VigilanteServiceImplTest {
 		assertEquals(pagoEsperado, pago, 0.0);
 			
 	}
+	
+	
 	
 	@Test
 	public void actualizarDisponibilidadIngreso() {
