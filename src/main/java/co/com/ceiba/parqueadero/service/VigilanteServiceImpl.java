@@ -26,7 +26,7 @@ public class VigilanteServiceImpl implements VigilanteService {
 	//puede ir en utils en constantes.Por ahora dejarlo asi
 	public static final char LETRA_INICIAL_PLACA = 'A';
 	protected static final String[] DIAS_ESPECIALES = {"SUNDAY","MONDAY"};
-	public static final String NO_PUEDE_INGRESAR_DIA_NO_HABIL = "No puede ingresar porque no está en un dia hábil";
+	public static final String NO_PUEDE_INGRESAR_DIA_NO_HABIL = "No puede ingresar porque no esta en un dia habil";
 	public static final String NO_HAY_PARQUEADEROS_DISPONIBLES = "No puede ingresar porque no hay un parqueadero disponible para Carros";
 	
 	
@@ -62,7 +62,6 @@ public class VigilanteServiceImpl implements VigilanteService {
 	public Vehiculo save(Vehiculo vehiculo) {
 		return this.vehiculoRepository.save(vehiculo);
 	}
-	
 	
 	@Override
 	public Registro registrarIngreso(Vehiculo vehiculo) {
