@@ -16,5 +16,7 @@ public interface VigilanteService {
 	Registro registrarSalida(Vehiculo vehiculo);
 
 	List<Registro> consultarVehiculos();
+
+	Vehiculo findById(Long id);
 	
 }

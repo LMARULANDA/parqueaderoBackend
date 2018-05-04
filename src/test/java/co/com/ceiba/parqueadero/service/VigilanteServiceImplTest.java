@@ -106,7 +106,7 @@ public class VigilanteServiceImplTest {
 		String fechaS = "03/05/2018 11:00:10";
 		Date fechaSalida = dateformat.parse(fechaS);
 	
-		float pagoEsperado = (float) 1000.0;
+		float pagoEsperado = (float) 3000.0;
 		
 		//Act
 		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
