@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2018-05-04T16:06:35" hostname="LAURA-MARULANDA" time="0.153">
+<testsuite name="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2018-05-04T16:17:23" hostname="LAURA-MARULANDA" time="0.141">
   <properties/>
-  <testcase name="actualizarDisponibilidadRetiro" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.137"/>
+  <testcase name="actualizarDisponibilidadRetiro" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.13"/>
   <testcase name="actualizarDisponibilidadIngreso" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
   <testcase name="validarIngresoDiasNoHabiles" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
-  <testcase name="calcularValorAPagarCarro" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.009"/>
+  <testcase name="calcularValorAPagarCarro" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.007"/>
   <testcase name="calcularValorAPagarMoto" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
-  <testcase name="esPlacaEspecial" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
+  <testcase name="esPlacaEspecial" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.0"/>
   <testcase name="validarIngresoDiasHabiles" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.0"/>
   <system-out><![CDATA[retiroAntes0
 retiroDwspues1
