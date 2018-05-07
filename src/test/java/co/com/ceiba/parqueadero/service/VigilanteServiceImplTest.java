@@ -172,5 +172,5 @@ public class VigilanteServiceImplTest {
 		//Assert
 		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
 	}
-
+	
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2018-05-04T21:50:44" hostname="LAURA-MARULANDA" time="0.152">
+<testsuite name="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2018-05-07T21:19:45" hostname="LAURA-MARULANDA" time="0.231">
   <properties/>
-  <testcase name="actualizarDisponibilidadRetiro" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.138"/>
-  <testcase name="actualizarDisponibilidadIngreso" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
-  <testcase name="validarIngresoDiasNoHabiles" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
-  <testcase name="calcularValorAPagarCarro" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.007"/>
-  <testcase name="calcularValorAPagarMoto" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.003"/>
-  <testcase name="esPlacaEspecial" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
-  <testcase name="validarIngresoDiasHabiles" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.0"/>
+  <testcase name="verificarDisponibilidadMoto" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.212"/>
+  <testcase name="calcularValorAPagarCarro1Hora" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.014"/>
+  <testcase name="verificarNoDisponibilidadMoto" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.0"/>
+  <testcase name="verificarDisponibilidadCarro" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
+  <testcase name="validarIngresoPlacaEspecialDiaHabil" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
+  <testcase name="validarIngresoPlacaEspecialDiaNoHabil" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.0"/>
+  <testcase name="validarIngresoPlacaNoEspecial" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.0"/>
+  <testcase name="verificarNoDisponibilidadCarro" classname="co.com.ceiba.parqueadero.service.VigilanteServiceImplTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

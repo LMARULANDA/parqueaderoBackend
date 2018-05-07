@@ -137,6 +137,7 @@ public class VigilanteServiceImpl implements VigilanteService {
 	public float calcularValorAPagar(Registro registro) {
 		float pago;
 		if(registro.getVehiculo().getTipoDeVehiculo() == CARRO) {
+			
 			valorHora = VALOR_HORA_CARRO;
 			valorDia = VALOR_DIA_CARRO;
 		} else {
@@ -148,7 +149,6 @@ public class VigilanteServiceImpl implements VigilanteService {
 	}
 
 	private float calcularPago(Registro registro,float valorHora,float valorDia) {
-		float pago;
 		
 		LocalDateTime horaEntrada = date.convertirDateALocalDateTime(registro.getHoraEntrada());
 		LocalDateTime horaSalida = date.convertirDateALocalDateTime(registro.getHoraSalida());
@@ -169,52 +169,6 @@ public class VigilanteServiceImpl implements VigilanteService {
 			return (diasPermanencia * valorDia) + (horasPermanencia * valorHora);
 		}
 		
-	}
-
-	public float calcularValorAPagarCarro(Date fechaEntrada, Date fechaSalida) {
-		float pago;
-		LocalDateTime horaEntrada = date.convertirDateALocalDateTime(fechaEntrada);
-		LocalDateTime horaSalida = date.convertirDateALocalDateTime(fechaSalida);
-		long horasPermanencia = Duration.between(horaEntrada, horaSalida).toHours();
-		if (horasPermanencia == 0) {
-			horasPermanencia = 1;
-		}
-
-		if (horasPermanencia < HORAS_MINIMAS_DIA) {
-			pago = VALOR_HORA_CARRO * horasPermanencia;
-		} else if (horasPermanencia < HORAS_MAXIMAS_DIA) {
-			pago = VALOR_DIA_CARRO;
-		} else {
-			long diasPermanencia = Duration.between(horaEntrada, horaSalida).toDays();
-			horasPermanencia = horasPermanencia - (diasPermanencia * HORAS_MAXIMAS_DIA);
-			pago = (diasPermanencia * VALOR_DIA_CARRO) + (horasPermanencia * VALOR_HORA_CARRO);
-		}
-
-		return pago;
-	}
-
-	public float calcularValorAPagarMoto(Date fechaEntrada, Date fechaSalida, int cilindraje) {
-		float pago;
-		LocalDateTime horaEntrada = date.convertirDateALocalDateTime(fechaEntrada);
-		LocalDateTime horaSalida = date.convertirDateALocalDateTime(fechaSalida);
-		long horasPermanencia = Duration.between(horaEntrada, horaSalida).toHours();
-		if (horasPermanencia == 0) {
-			horasPermanencia = 1;
-		}
-		if (horasPermanencia < HORAS_MINIMAS_DIA) {
-			pago = VALOR_HORA_MOTO * horasPermanencia;
-		} else if (horasPermanencia < HORAS_MAXIMAS_DIA) {
-			pago = VALOR_DIA_MOTO;
-		} else {
-			long diasPermanencia = Duration.between(horaEntrada, horaSalida).toDays();
-			horasPermanencia = horasPermanencia - (diasPermanencia * HORAS_MAXIMAS_DIA);
-			pago = (diasPermanencia * VALOR_DIA_MOTO) + (horasPermanencia * VALOR_HORA_MOTO);
-		}
-
-		if (cilindraje > CILINDRAJE_MAYOR_MOTO) {
-			pago = pago + VALOR_ADICIONAL_CILINDRAJE;
-		}
-		return pago;
 	}
 
 }
