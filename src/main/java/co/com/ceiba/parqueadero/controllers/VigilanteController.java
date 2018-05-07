@@ -3,7 +3,9 @@ package co.com.ceiba.parqueadero.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import co.com.ceiba.parqueadero.model.Registro;
 import co.com.ceiba.parqueadero.model.Vehiculo;
 import co.com.ceiba.parqueadero.service.VigilanteService;
+import co.com.ceiba.parqueadero.util.RestResponse;
 
 
 @RestController
@@ -26,26 +29,13 @@ public class VigilanteController {
 
 	protected ObjectMapper mapper;
 
-	// este no debe de ir como servicio Rest.sino dentro de save.
-	// save se puede cambiar por otro nombre
-	@RequestMapping(value = "/agregarVehiculo", method = RequestMethod.POST)
-	public Vehiculo agregarVehiculo(@RequestBody String vehiculoJson)
-			throws IOException {
-		this.mapper = new ObjectMapper();
-		Vehiculo vehiculo = this.mapper.readValue(vehiculoJson, Vehiculo.class);
-
-		this.vigilanteService.save(vehiculo);
-		return this.vigilanteService.save(vehiculo);
-	}
-
 	@RequestMapping(value = "/registrarIngreso", method = RequestMethod.POST)
-	public Registro registrarIngreso(@RequestBody String vehiculoJson)
+	public void registrarIngreso(@RequestBody String vehiculoJson)
 			throws IOException {
 		this.mapper = new ObjectMapper();
 		Vehiculo vehiculo = this.mapper.readValue(vehiculoJson, Vehiculo.class);
-
+		
 		this.vigilanteService.registrarIngreso(vehiculo);
-		return this.vigilanteService.registrarIngreso(vehiculo);
 
 	}
 
@@ -62,5 +52,17 @@ public class VigilanteController {
 	public List<Registro> consultarVehiculos(){
 		return this.vigilanteService.consultarVehiculos();
 		
+	}
+	
+	private boolean validate(Vehiculo vehiculo) {
+		boolean isValid = true;
+		
+		if(StringUtils.trimToNull(vehiculo.getPlaca())== null) {
+			isValid=false;
+		}
+		if(StringUtils.trimToNull(vehiculo.getTipoDeVehiculo()) == null) {
+			isValid=false;
+		}
+		return isValid;
 	}
 }

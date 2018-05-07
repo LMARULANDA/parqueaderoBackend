@@ -14,7 +14,6 @@ import co.com.ceiba.parqueadero.dao.RegistroRepository;
 import co.com.ceiba.parqueadero.dao.VehiculoRepository;
 import co.com.ceiba.parqueadero.model.Registro;
 import co.com.ceiba.parqueadero.model.Vehiculo;
-import co.com.ceiba.parqueadero.model.dto.ParqueaderoDTO;
 import co.com.ceiba.parqueadero.util.ConvertirDate;
 import co.com.ceiba.parqueadero.util.RegistroException;
 
@@ -37,8 +36,13 @@ public class VigilanteServiceImpl implements VigilanteService {
 	public static final int CILINDRAJE_MAYOR_MOTO = 500;
 	public static final float VALOR_ADICIONAL_CILINDRAJE = 2000;
 
-	// public static final int CANTIDAD_MAXIMA_CARROS = 20;
-	// public static final int CANTIDAD_MAXIMA_MOTOS = 10;
+	public static final int CANTIDAD_MAXIMA_CARROS = 20;
+	public static final int CANTIDAD_MAXIMA_MOTOS = 10;
+	
+	public int cantidadMaximaDisponible = 0;
+	public float valorHora = 0;
+	public float valorDia = 0;
+	
 
 	@Autowired
 	protected VehiculoRepository vehiculoRepository;
@@ -46,7 +50,6 @@ public class VigilanteServiceImpl implements VigilanteService {
 	protected RegistroRepository registroRepository;
 
 	ConvertirDate date = new ConvertirDate();
-	ParqueaderoDTO parqueadero = new ParqueaderoDTO();
 
 	public VigilanteServiceImpl(VehiculoRepository vehiculoRepository, RegistroRepository registroRepository) {
 		this.vehiculoRepository = vehiculoRepository;
@@ -64,41 +67,35 @@ public class VigilanteServiceImpl implements VigilanteService {
 		
 	}
 	
-	
-	
-	//error cuando no hay cupo disponible
 	@Override
 	public Registro registrarIngreso(Vehiculo vehiculo) {
-
-		
 		LocalDate localDate = LocalDate.now();
 
-		if (!verificarDisponibilidad(vehiculo.getTipoDeVehiculo())) {
+		if (!verificarDisponibilidad(vehiculo)) {
 			throw new RegistroException(NO_HAY_PARQUEADEROS_DISPONIBLES);
 		}
-
-		if (!puedeIngresar(vehiculo.getPlaca(), localDate)) {
+		if (!validarIngreso(vehiculo.getPlaca(),localDate)) {
 
 				throw new RegistroException(NO_PUEDE_INGRESAR_DIA_NO_HABIL);
 		}
-		
-		/*if(findById(vehiculo.getId()) == null) {
-			save(vehiculo);
-		}
-		else {
-			Vehiculo vehiculo = findById(vehiculo.getId());
-		}*/
-		
-		
+		save(vehiculo);
 		Registro registro = new Registro();
 		LocalDateTime localDateTime = LocalDateTime.now();
 		registro.setVehiculo(vehiculo);
-		registro.setHoraEntrada(date.convertirLocalDateTimeADate(localDateTime));
-		actualizarDisponibilidadIngreso(vehiculo.getTipoDeVehiculo());
-
-		
+		registro.setHoraEntrada(date.convertirLocalDateTimeADate(localDateTime));	
 		return this.registroRepository.save(registro);
 
+	}
+
+	private boolean verificarDisponibilidad(Vehiculo vehiculo) {
+		if(vehiculo.getTipoDeVehiculo() == CARRO) {
+			cantidadMaximaDisponible = CANTIDAD_MAXIMA_CARROS;
+		}else {
+			cantidadMaximaDisponible = CANTIDAD_MAXIMA_MOTOS;
+		}
+		return this.registroRepository.countVehiculosIngresados(vehiculo.getTipoDeVehiculo()) 
+				<= cantidadMaximaDisponible;
+		
 	}
 
 	@Override
@@ -107,18 +104,6 @@ public class VigilanteServiceImpl implements VigilanteService {
 		LocalDateTime localDateTime = LocalDateTime.now();
 		registro.setHoraSalida(date.convertirLocalDateTimeADate(localDateTime));
 		registro.setPago(calcularValorAPagar(registro));
-
-		float pago;
-		if (vehiculo.getTipoDeVehiculo() == CARRO) {
-			pago = calcularValorAPagarCarro(registro.getHoraEntrada(), registro.getHoraSalida());
-		} else {
-			pago = calcularValorAPagarMoto(registro.getHoraEntrada(), registro.getHoraSalida(),
-					registro.getVehiculo().getCilindraje());
-		}
-
-		registro.setPago(pago);
-		actualizarDisponibilidadRetiro(vehiculo.getTipoDeVehiculo());
-
 		return this.registroRepository.save(registro);
 	}
 
@@ -127,45 +112,54 @@ public class VigilanteServiceImpl implements VigilanteService {
 		return this.registroRepository.findAllVehiculosIngresados();
 	}
 
-	public boolean puedeIngresar(String placa, LocalDate date) {
-		boolean puedeIngresar = true;
-		if (esPlacaEspecial(placa)) {
-			puedeIngresar = validarIngreso(date);
-		}
-		return puedeIngresar;
+	public boolean validarIngreso(String placa, LocalDate date) {
+		return (validarPlaca(placa) && validarDias(date));
 	}
 
-	public Boolean validarIngreso(LocalDate date) {
-		boolean puedeIngresar = false;
+	public Boolean validarDias(LocalDate date) {
+		boolean diaValido = false;
 		DayOfWeek diaSemana = date.getDayOfWeek();
 		String dia = diaSemana.name();
 		for (int i = 0; i < DIAS_ESPECIALES.length; i++) {
 			if (dia.equals(DIAS_ESPECIALES[i])) {
-				puedeIngresar = true;
+				diaValido = true;
 			}
 		}
-
-		return puedeIngresar;
+		return diaValido;
 	}
 
-	public boolean esPlacaEspecial(String placa) {
-		boolean esPlacaEspecial = false;
-		char letraInicial = placa.charAt(0);
-		if (letraInicial == LETRA_INICIAL_PLACA) {
-			esPlacaEspecial = true;
-		}
-		return esPlacaEspecial;
+	public boolean validarPlaca(String placa) {	
+		return placa.charAt(0) == LETRA_INICIAL_PLACA;
 	}
 
 	public float calcularValorAPagar(Registro registro) {
 		float pago;
-
-		if (registro.getVehiculo().getTipoDeVehiculo() == CARRO) {
-			pago = calcularValorAPagarCarro(registro.getHoraEntrada(), registro.getHoraSalida());
+		if(registro.getVehiculo().getTipoDeVehiculo() == CARRO) {
+			valorHora = VALOR_HORA_CARRO;
+			valorDia = VALOR_DIA_CARRO;
 		} else {
-			pago = calcularValorAPagarMoto(registro.getHoraEntrada(), registro.getHoraSalida(),
-					registro.getVehiculo().getCilindraje());
+			valorHora = VALOR_HORA_MOTO;
+			valorDia = VALOR_DIA_MOTO;
 		}
+		
+		LocalDateTime horaEntrada = date.convertirDateALocalDateTime(registro.getHoraEntrada());
+		LocalDateTime horaSalida = date.convertirDateALocalDateTime(registro.getHoraSalida());
+		long horasPermanencia = Duration.between(horaEntrada, horaSalida).toHours();
+		
+		if (horasPermanencia == 0) {
+			horasPermanencia = 1;
+		}
+
+		if (horasPermanencia < HORAS_MINIMAS_DIA) {
+			pago = valorHora * horasPermanencia;
+		} else if (horasPermanencia < HORAS_MAXIMAS_DIA) {
+			pago = valorDia;
+		} else {
+			long diasPermanencia = Duration.between(horaEntrada, horaSalida).toDays();
+			horasPermanencia = horasPermanencia - (diasPermanencia * HORAS_MAXIMAS_DIA);
+			pago = (diasPermanencia * valorDia) + (horasPermanencia * valorHora);
+		}
+		
 		return pago;
 	}
 
@@ -213,65 +207,6 @@ public class VigilanteServiceImpl implements VigilanteService {
 			pago = pago + VALOR_ADICIONAL_CILINDRAJE;
 		}
 		return pago;
-	}
-
-	public boolean verificarDisponibilidad(String tipoVehiculo) {
-		
-		
-		
-		
-		boolean estaDisponible;
-		if (tipoVehiculo == CARRO) {
-			estaDisponible = consultarDisponibilidadCarro();
-		} else {
-			estaDisponible = consultarDisponibilidadMoto();
-		}
-		return estaDisponible;
-
-	}
-
-	public boolean consultarDisponibilidadCarro() {
-		boolean disponible = true;
-		ParqueaderoDTO parqueadero = new ParqueaderoDTO();
-		int cantidadParqueaderosCarros = parqueadero.getCantidadDisponibleCarros();
-		if (cantidadParqueaderosCarros == 0) {
-			disponible = false;
-		}
-		return disponible;
-
-	}
-
-	public boolean consultarDisponibilidadMoto() {
-		boolean disponible = true;
-		ParqueaderoDTO parqueadero = new ParqueaderoDTO();
-		int cantidadParqueaderosCarros = parqueadero.getCantidadDisponibleCarros();
-		if (cantidadParqueaderosCarros == 0) {
-			disponible = false;
-		}
-		return disponible;
-	}
-
-	public void actualizarDisponibilidadIngreso(String tipoVehiculo) {
-		if (tipoVehiculo == CARRO) {
-			int cantidadDisponible = parqueadero.getCantidadDisponibleCarros();
-			parqueadero.setCantidadDisponibleCarros(cantidadDisponible - 1);
-			
-		} else {
-			int cantidadDisponible = parqueadero.getCantidadDisponibleMotos();
-			parqueadero.setCantidadDisponibleMotos(cantidadDisponible - 1);
-		}
-	}
-
-	public void actualizarDisponibilidadRetiro(String tipoVehiculo) {
-
-		if (tipoVehiculo == CARRO) {
-			int cantidadDisponible = parqueadero.getCantidadDisponibleCarros();
-			parqueadero.setCantidadDisponibleCarros(cantidadDisponible + 1);
-		} else {
-			int cantidadDisponible = parqueadero.getCantidadDisponibleMotos();
-			parqueadero.setCantidadDisponibleMotos(cantidadDisponible + 1);
-		}
-
 	}
 
 }
