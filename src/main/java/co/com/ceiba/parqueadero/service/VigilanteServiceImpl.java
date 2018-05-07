@@ -71,9 +71,13 @@ public class VigilanteServiceImpl implements VigilanteService {
 	public Registro registrarIngreso(Vehiculo vehiculo) {
 		LocalDate localDate = LocalDate.now();
 
-		if (!verificarDisponibilidad(vehiculo)) {
+		if(!(validarPlaca(vehiculo.getPlaca()) && validarDias(localDate))) {
 			throw new RegistroException(NO_HAY_PARQUEADEROS_DISPONIBLES);
 		}
+		
+		/*if (!verificarDisponibilidad(vehiculo)) {
+			throw new RegistroException(NO_HAY_PARQUEADEROS_DISPONIBLES);
+		}*/
 		if (!validarIngreso(vehiculo.getPlaca(),localDate)) {
 
 				throw new RegistroException(NO_PUEDE_INGRESAR_DIA_NO_HABIL);
@@ -116,7 +120,7 @@ public class VigilanteServiceImpl implements VigilanteService {
 		return (validarPlaca(placa) && validarDias(date));
 	}
 
-	public Boolean validarDias(LocalDate date) {
+	private Boolean validarDias(LocalDate date) {
 		boolean diaValido = false;
 		DayOfWeek diaSemana = date.getDayOfWeek();
 		String dia = diaSemana.name();
@@ -128,7 +132,7 @@ public class VigilanteServiceImpl implements VigilanteService {
 		return diaValido;
 	}
 
-	public boolean validarPlaca(String placa) {	
+	private boolean validarPlaca(String placa) {	
 		return placa.charAt(0) == LETRA_INICIAL_PLACA;
 	}
 
