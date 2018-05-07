@@ -88,13 +88,10 @@ public class VigilanteServiceImpl implements VigilanteService {
 	}
 
 	public boolean verificarDisponibilidad(Vehiculo vehiculo) {
-		if(vehiculo.getTipoDeVehiculo() == CARRO) {
-			cantidadMaximaDisponible = CANTIDAD_MAXIMA_CARROS;
-		}else {
-			cantidadMaximaDisponible = CANTIDAD_MAXIMA_MOTOS;
-		}
 		return this.registroRepository.countVehiculosIngresados(vehiculo.getTipoDeVehiculo()) 
-				< cantidadMaximaDisponible;
+				<  FactoryCelda.establecerCelda(vehiculo.getTipoDeVehiculo()).maximaCantidadCeldas();
+		
+	
 		
 	}
 	
