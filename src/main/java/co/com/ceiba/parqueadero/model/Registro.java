@@ -30,6 +30,18 @@ public class Registro extends ParentEntity {
 	
 	@Column(name="pago", nullable = true)
 	private Float pago;
+	
+	public Registro() {
+		
+	}
+	
+	public Registro(Vehiculo vehiculo, Date horaEntrada, Date horaSalida, Float pago) {
+		super();
+		this.vehiculo = vehiculo;
+		this.horaEntrada = horaEntrada;
+		this.horaSalida = horaSalida;
+		this.pago = pago;
+	}
 
 	
 	public Vehiculo getVehiculo() {

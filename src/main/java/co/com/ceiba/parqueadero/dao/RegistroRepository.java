@@ -17,6 +17,6 @@ public interface RegistroRepository extends JpaRepository<Registro, Long> {
 	List<Registro> findAllVehiculosIngresados();
 	
 	@Query("select count(r)  from Registro r where r.vehiculo.tipoDeVehiculo =?1 and r.horaSalida is null")
-	Integer countVehiculosIngresados(String tipoVehiculo);
+	int countVehiculosIngresados(String tipoVehiculo);
 	
 }

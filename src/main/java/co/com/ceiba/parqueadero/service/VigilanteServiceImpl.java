@@ -71,13 +71,9 @@ public class VigilanteServiceImpl implements VigilanteService {
 	public Registro registrarIngreso(Vehiculo vehiculo) {
 		LocalDate localDate = LocalDate.now();
 
-		if(!(validarPlaca(vehiculo.getPlaca()) && validarDias(localDate))) {
+		if (!verificarDisponibilidad(vehiculo)) {
 			throw new RegistroException(NO_HAY_PARQUEADEROS_DISPONIBLES);
 		}
-		
-		/*if (!verificarDisponibilidad(vehiculo)) {
-			throw new RegistroException(NO_HAY_PARQUEADEROS_DISPONIBLES);
-		}*/
 		if (!validarIngreso(vehiculo.getPlaca(),localDate)) {
 
 				throw new RegistroException(NO_PUEDE_INGRESAR_DIA_NO_HABIL);
@@ -91,33 +87,19 @@ public class VigilanteServiceImpl implements VigilanteService {
 
 	}
 
-	private boolean verificarDisponibilidad(Vehiculo vehiculo) {
+	public boolean verificarDisponibilidad(Vehiculo vehiculo) {
 		if(vehiculo.getTipoDeVehiculo() == CARRO) {
 			cantidadMaximaDisponible = CANTIDAD_MAXIMA_CARROS;
 		}else {
 			cantidadMaximaDisponible = CANTIDAD_MAXIMA_MOTOS;
 		}
 		return this.registroRepository.countVehiculosIngresados(vehiculo.getTipoDeVehiculo()) 
-				<= cantidadMaximaDisponible;
+				< cantidadMaximaDisponible;
 		
 	}
-
-	@Override
-	public Registro registrarSalida(Vehiculo vehiculo) {
-		Registro registro = this.registroRepository.findByVehiculo(vehiculo.getId());
-		LocalDateTime localDateTime = LocalDateTime.now();
-		registro.setHoraSalida(date.convertirLocalDateTimeADate(localDateTime));
-		registro.setPago(calcularValorAPagar(registro));
-		return this.registroRepository.save(registro);
-	}
-
-	@Override
-	public List<Registro> consultarVehiculos() {
-		return this.registroRepository.findAllVehiculosIngresados();
-	}
-
+	
 	public boolean validarIngreso(String placa, LocalDate date) {
-		return (validarPlaca(placa) && validarDias(date));
+		return (!validarPlaca(placa) || (validarPlaca(placa) && validarDias(date)));
 	}
 
 	private Boolean validarDias(LocalDate date) {
@@ -136,6 +118,22 @@ public class VigilanteServiceImpl implements VigilanteService {
 		return placa.charAt(0) == LETRA_INICIAL_PLACA;
 	}
 
+	@Override
+	public Registro registrarSalida(Vehiculo vehiculo) {
+		Registro registro = this.registroRepository.findByVehiculo(vehiculo.getId());
+		LocalDateTime localDateTime = LocalDateTime.now();
+		registro.setHoraSalida(date.convertirLocalDateTimeADate(localDateTime));
+		registro.setPago(calcularValorAPagar(registro));
+		return this.registroRepository.save(registro);
+	}
+
+	@Override
+	public List<Registro> consultarVehiculos() {
+		return this.registroRepository.findAllVehiculosIngresados();
+	}
+
+	
+
 	public float calcularValorAPagar(Registro registro) {
 		float pago;
 		if(registro.getVehiculo().getTipoDeVehiculo() == CARRO) {
@@ -146,8 +144,15 @@ public class VigilanteServiceImpl implements VigilanteService {
 			valorDia = VALOR_DIA_MOTO;
 		}
 		
+		return calcularPago(registro,valorHora,valorDia);
+	}
+
+	private float calcularPago(Registro registro,float valorHora,float valorDia) {
+		float pago;
+		
 		LocalDateTime horaEntrada = date.convertirDateALocalDateTime(registro.getHoraEntrada());
 		LocalDateTime horaSalida = date.convertirDateALocalDateTime(registro.getHoraSalida());
+		
 		long horasPermanencia = Duration.between(horaEntrada, horaSalida).toHours();
 		
 		if (horasPermanencia == 0) {
@@ -155,16 +160,15 @@ public class VigilanteServiceImpl implements VigilanteService {
 		}
 
 		if (horasPermanencia < HORAS_MINIMAS_DIA) {
-			pago = valorHora * horasPermanencia;
+			return valorHora * horasPermanencia;
 		} else if (horasPermanencia < HORAS_MAXIMAS_DIA) {
-			pago = valorDia;
+			return valorDia;
 		} else {
 			long diasPermanencia = Duration.between(horaEntrada, horaSalida).toDays();
 			horasPermanencia = horasPermanencia - (diasPermanencia * HORAS_MAXIMAS_DIA);
-			pago = (diasPermanencia * valorDia) + (horasPermanencia * valorHora);
+			return (diasPermanencia * valorDia) + (horasPermanencia * valorHora);
 		}
 		
-		return pago;
 	}
 
 	public float calcularValorAPagarCarro(Date fechaEntrada, Date fechaSalida) {
