@@ -4,7 +4,7 @@ public class CeldaCarro implements Celda {
 
 	@Override
 	public int maximaCantidadCeldas() {
-		return 60;
+		return 20;
 	}
 
 }

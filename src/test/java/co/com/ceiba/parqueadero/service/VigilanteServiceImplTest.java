@@ -173,4 +173,249 @@ public class VigilanteServiceImplTest {
 		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
 	}
 	
+	@Test
+	public void calcularValorAPagarCarroMenosDe9Horas() throws ParseException {
+		//Arrange
+				Vehiculo vehiculo = new VehiculoTestDataBuilder().
+						withPlaca("OLK457").
+						withTipoVehiculo("carro").
+						build();
+				
+				DateFormat dateformat= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				String fechaEntradaS = "03/05/2018 09:00:00";
+				Date fechaEntrada = dateformat.parse(fechaEntradaS);
+				
+				String fechaSalidaS = "03/05/2018 12:00:00";
+				Date fechaSalida = dateformat.parse(fechaSalidaS);
+				
+				Registro registro = new RegistroTestDataBuilder().
+						withVehiculo(vehiculo).
+						withHoraEntrada(fechaEntrada).
+						withHoraSalida(fechaSalida).
+						build();
+		
+		float pagoEsperado = 3000;
+		//Act
+		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
+		vigilanteServiceImpl.calcularValorAPagar(registro);
+				
+		//Assert
+		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
+	}
+	
+
+	@Test
+	public void calcularValorAPagarCarroMasDe9YMenosDe24Horas() throws ParseException {
+		//Arrange
+				Vehiculo vehiculo = new VehiculoTestDataBuilder().
+						withPlaca("OLK457").
+						withTipoVehiculo("carro").
+						build();
+				
+				DateFormat dateformat= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				String fechaEntradaS = "03/05/2018 09:00:00";
+				Date fechaEntrada = dateformat.parse(fechaEntradaS);
+				
+				String fechaSalidaS = "03/05/2018 20:00:00";
+				Date fechaSalida = dateformat.parse(fechaSalidaS);
+				
+				Registro registro = new RegistroTestDataBuilder().
+						withVehiculo(vehiculo).
+						withHoraEntrada(fechaEntrada).
+						withHoraSalida(fechaSalida).
+						build();
+		
+		float pagoEsperado = 8000;
+		//Act
+		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
+		vigilanteServiceImpl.calcularValorAPagar(registro);
+				
+		//Assert
+		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
+	}
+	
+	@Test
+	public void calcularValorAPagarCarroMasDe24Horas() throws ParseException {
+		//Arrange
+				Vehiculo vehiculo = new VehiculoTestDataBuilder().
+						withPlaca("OLK457").
+						withTipoVehiculo("carro").
+						build();
+				
+				DateFormat dateformat= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				String fechaEntradaS = "03/05/2018 09:00:00";
+				Date fechaEntrada = dateformat.parse(fechaEntradaS);
+				
+				String fechaSalidaS = "04/05/2018 12:00:00";
+				Date fechaSalida = dateformat.parse(fechaSalidaS);
+				
+				Registro registro = new RegistroTestDataBuilder().
+						withVehiculo(vehiculo).
+						withHoraEntrada(fechaEntrada).
+						withHoraSalida(fechaSalida).
+						build();
+		
+		float pagoEsperado = 11000;
+		//Act
+		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
+		vigilanteServiceImpl.calcularValorAPagar(registro);
+				
+		//Assert
+		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
+	}
+	
+	@Test
+	public void calcularValorAPagarMoto1Hora() throws ParseException {
+		//Arrange
+				Vehiculo vehiculo = new VehiculoTestDataBuilder().
+						withPlaca("OLK45M").
+						withTipoVehiculo("moto").
+						build();
+				
+				DateFormat dateformat= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				String fechaEntradaS = "03/05/2018 09:00:00";
+				Date fechaEntrada = dateformat.parse(fechaEntradaS);
+				
+				String fechaSalidaS = "03/05/2018 09:30:00";
+				Date fechaSalida = dateformat.parse(fechaSalidaS);
+				
+				Registro registro = new RegistroTestDataBuilder().
+						withVehiculo(vehiculo).
+						withHoraEntrada(fechaEntrada).
+						withHoraSalida(fechaSalida).
+						build();
+		
+		float pagoEsperado = 500;
+		//Act
+		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
+		vigilanteServiceImpl.calcularValorAPagar(registro);
+				
+		//Assert
+		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
+	}
+	
+	@Test
+	public void calcularValorAPagarMotoMenosDe9Horas() throws ParseException {
+		//Arrange
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().
+				withPlaca("OLK45M").
+				withTipoVehiculo("moto").
+				build();
+		
+		DateFormat dateformat= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String fechaEntradaS = "03/05/2018 09:00:00";
+		Date fechaEntrada = dateformat.parse(fechaEntradaS);
+		
+		String fechaSalidaS = "03/05/2018 12:00:00";
+		Date fechaSalida = dateformat.parse(fechaSalidaS);
+		
+		Registro registro = new RegistroTestDataBuilder().
+				withVehiculo(vehiculo).
+				withHoraEntrada(fechaEntrada).
+				withHoraSalida(fechaSalida).
+				build();
+
+		float pagoEsperado = 1500;
+		//Act
+		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
+		vigilanteServiceImpl.calcularValorAPagar(registro);
+				
+		//Assert
+		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
+		
+
+	}
+	
+	@Test
+	public void calcularValorAPagarMotoMasDe9YMenosDe24Horas() throws ParseException {
+		//Arrange
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().
+				withPlaca("OLK45M").
+				withTipoVehiculo("moto").
+				build();
+		
+		DateFormat dateformat= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String fechaEntradaS = "03/05/2018 09:00:00";
+		Date fechaEntrada = dateformat.parse(fechaEntradaS);
+		
+		String fechaSalidaS = "03/05/2018 20:00:00";
+		Date fechaSalida = dateformat.parse(fechaSalidaS);
+		
+		Registro registro = new RegistroTestDataBuilder().
+				withVehiculo(vehiculo).
+				withHoraEntrada(fechaEntrada).
+				withHoraSalida(fechaSalida).
+				build();
+
+		float pagoEsperado = 4000;
+		//Act
+		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
+		vigilanteServiceImpl.calcularValorAPagar(registro);
+				
+		//Assert
+		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
+	}
+	
+	@Test
+	public void calcularValorAPagarMotoMasDe24Horas() throws ParseException {
+		//Arrange
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().
+				withPlaca("OLK45M").
+				withTipoVehiculo("moto").
+				build();
+		
+		DateFormat dateformat= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String fechaEntradaS = "03/05/2018 09:00:00";
+		Date fechaEntrada = dateformat.parse(fechaEntradaS);
+		
+		String fechaSalidaS = "04/05/2018 12:00:00";
+		Date fechaSalida = dateformat.parse(fechaSalidaS);
+		
+		Registro registro = new RegistroTestDataBuilder().
+				withVehiculo(vehiculo).
+				withHoraEntrada(fechaEntrada).
+				withHoraSalida(fechaSalida).
+				build();
+
+		float pagoEsperado = 5500;
+		//Act
+		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
+		vigilanteServiceImpl.calcularValorAPagar(registro);
+				
+		//Assert
+		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
+	}
+	
+	@Test
+	public void calcularValorAPagarMotoCilindrajeMayorA500CC() throws ParseException {
+		//Arrange
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().
+				withPlaca("OLK45M").
+				withTipoVehiculo("moto").
+				build();
+		
+		DateFormat dateformat= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String fechaEntradaS = "03/05/2018 09:00:00";
+		Date fechaEntrada = dateformat.parse(fechaEntradaS);
+		
+		String fechaSalidaS = "03/05/2018 19:00:00";
+		Date fechaSalida = dateformat.parse(fechaSalidaS);
+		
+		Registro registro = new RegistroTestDataBuilder().
+				withVehiculo(vehiculo).
+				withHoraEntrada(fechaEntrada).
+				withHoraSalida(fechaSalida).
+				build();
+
+		float pagoEsperado = 6000;
+		//Act
+		VigilanteServiceImpl vigilanteServiceImpl = new VigilanteServiceImpl(vehiculoRepository,registroRepository);
+		vigilanteServiceImpl.calcularValorAPagar(registro);
+				
+		//Assert
+		assertEquals(pagoEsperado,vigilanteServiceImpl.calcularValorAPagar(registro),0.0);
+	}
+	
+	
+	
 }

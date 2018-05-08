@@ -53,16 +53,5 @@ public class VigilanteController {
 		return this.vigilanteService.consultarVehiculos();
 		
 	}
-	
-	private boolean validate(Vehiculo vehiculo) {
-		boolean isValid = true;
-		
-		if(StringUtils.trimToNull(vehiculo.getPlaca())== null) {
-			isValid=false;
-		}
-		if(StringUtils.trimToNull(vehiculo.getTipoDeVehiculo()) == null) {
-			isValid=false;
-		}
-		return isValid;
-	}
+
 }

@@ -30,7 +30,7 @@ public class VigilanteServiceImpl implements VigilanteService {
 	public static final float VALOR_HORA_CARRO = 1000;
 	public static final float VALOR_HORA_MOTO = 500;
 	public static final float VALOR_DIA_CARRO = 8000;
-	public static final float VALOR_DIA_MOTO = 600;
+	public static final float VALOR_DIA_MOTO = 4000;
 	public static final int HORAS_MINIMAS_DIA = 9;
 	public static final int HORAS_MAXIMAS_DIA = 24;
 	public static final int CILINDRAJE_MAYOR_MOTO = 500;

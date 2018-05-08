@@ -4,6 +4,9 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -26,8 +29,8 @@ public class Vehiculo extends ParentEntity {
 	public Vehiculo() {
 		
 	}
+
 	public Vehiculo(String placa, String tipoDeVehiculo, int cilindraje) {
-		super();
 		this.placa = placa;
 		this.tipoDeVehiculo = tipoDeVehiculo;
 		this.cilindraje = cilindraje;
