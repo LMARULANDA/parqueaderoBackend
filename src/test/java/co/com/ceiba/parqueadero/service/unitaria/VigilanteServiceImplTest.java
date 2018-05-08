@@ -1,4 +1,4 @@
-package co.com.ceiba.parqueadero.service;
+package co.com.ceiba.parqueadero.service.unitaria;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,6 +19,7 @@ import co.com.ceiba.parqueadero.dao.RegistroRepository;
 import co.com.ceiba.parqueadero.dao.VehiculoRepository;
 import co.com.ceiba.parqueadero.model.Registro;
 import co.com.ceiba.parqueadero.model.Vehiculo;
+import co.com.ceiba.parqueadero.service.VigilanteServiceImpl;
 import co.com.ceiba.parqueadero.testdatabuilder.RegistroTestDataBuilder;
 import co.com.ceiba.parqueadero.testdatabuilder.VehiculoTestDataBuilder;
 

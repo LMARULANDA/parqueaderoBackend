@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import co.com.ceiba.parqueadero.dao.RegistroRepository;
@@ -45,9 +46,11 @@ public class VigilanteServiceImpl implements VigilanteService {
 	
 
 	@Autowired
-	protected VehiculoRepository vehiculoRepository;
+	@Qualifier("vehiculoRepository")
+	private VehiculoRepository vehiculoRepository;
 	@Autowired
-	protected RegistroRepository registroRepository;
+	@Qualifier("registroRepository")
+	private RegistroRepository registroRepository;
 
 	ConvertirDate date = new ConvertirDate();
 
@@ -152,6 +155,7 @@ public class VigilanteServiceImpl implements VigilanteService {
 		
 		long horasPermanencia = Duration.between(horaEntrada, horaSalida).toHours();
 		
+		
 		if (horasPermanencia == 0) {
 			horasPermanencia = 1;
 		}
@@ -164,8 +168,11 @@ public class VigilanteServiceImpl implements VigilanteService {
 			long diasPermanencia = Duration.between(horaEntrada, horaSalida).toDays();
 			horasPermanencia = horasPermanencia - (diasPermanencia * HORAS_MAXIMAS_DIA);
 			return (diasPermanencia * valorDia) + (horasPermanencia * valorHora);
+		
+		
 		}
 		
+			
 	}
 
 }
