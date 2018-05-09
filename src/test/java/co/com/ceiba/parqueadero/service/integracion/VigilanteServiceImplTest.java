@@ -1,19 +1,17 @@
 package co.com.ceiba.parqueadero.service.integracion;
 
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 
-import javax.ws.rs.core.Application;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.com.ceiba.parqueadero.dao.RegistroRepository;
@@ -25,7 +23,7 @@ import co.com.ceiba.parqueadero.testdatabuilder.VehiculoTestDataBuilder;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 public class VigilanteServiceImplTest {
 	
 	@Autowired
